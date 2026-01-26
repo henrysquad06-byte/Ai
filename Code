@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Speak Out Loud</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
+  #inputText { width: 80%; padding: 10px; font-size: 1em; }
+  button { padding: 10px; font-size: 1em; }
+</style>
+</head>
+<body>
+
+<h2>Type and Hear in Alexa-like Voice</h2>
+<input type="text" id="inputText" placeholder="Type your message here" />
+<button onclick="speak()">Speak</button>
+
+<script>
+function speak() {
+  const text = document.getElementById('inputText').value;
+  if (!text) return;
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Optional: set voice to a specific voice if available
+  const voices = window.speechSynthesis.getVoices();
+  // Find a voice that sounds like Alexa (depends on browser)
+  const alexaVoice = voices.find(voice => voice.name.toLowerCase().includes('amazon') || voice.name.toLowerCase().includes('alex'));
+  if (alexaVoice) {
+    utterance.voice = alexaVoice;
+  }
+
+  window.speechSynthesis.speak(utterance);
+}
+</script>
+
+</body>
+</html>
